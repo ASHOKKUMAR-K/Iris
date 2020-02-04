@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/main.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/iris.min.css')}}">
+    
+  
+    <title>IRIS</title>
+  </head>
+  <body>
+<!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">
+        <img src="{{url_for('static', filename='svg/a.svg')}}" width="35" height="35" class="d-inline-block align-top" alt="">
+      </a>
+      <span class="navbar-brand ml-0 mb-0 h1">ASHOK</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse form" id="navbarSupportedContent" >
+
+
+        <form class="form-inline my-lg-0 search">
+          <hr>
+          <input class="form-control mr-sm-2 formcontrol" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0 search-icon" type="submit">
+        <img src="{{url_for('static', filename='svg/search.svg')}}" width="23" height="23" class="d-inline-block align-top" alt="">
+          </button>
+        </form>
+
+
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Projects
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="https://weight-prediction-api.herokuapp.com/">Height Prediction</a>
+              <a class="dropdown-item" href="https://gender-classification-api.herokuapp.com/">Gender Classification</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{url_for('iris_classification')}}">Iris Classification</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Resume</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+
+
+
+      <div class="row">
+        <div class="card">
+          <div class="card-body border-left rounded about">
+            <div class="h4 iris-head">IRIS</div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body clf-card-body">
+                    <div class="h6 train-test">Train set</div>
+                    <img class="clf-img" src="{{train_clf}}">    
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body clf-card-body">
+                    <div class="h6 train-test">Test set</div>
+                    <img class="clf-img" src="{{test_clf}}">    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-3"></div>  
+        <div class="col-md-6">  
+          <div class="card">
+            <div class="card-body border-left rounded about">
+              <div class="h5 form-head">IRIS CLASSIFICATION</div>
+              <form method="POST" class="data-form">
+                <div class="form-group row">
+                  <label for="Sepal_Length" class="col-md-5">SEPAL LENGTH</label>
+                  <input name="sep_len" type="text" required="" class="col-md-7 form-control" id="Sepal_Length" placeholder="Sepal Length">
+                </div>
+                <div class="form-group row">
+                  <label for="Sepal_Width" class="col-md-5">SEPAL WIDTH</label>
+                  <input name="sep_wid" required="" type="text" class="col-md-7 form-control" id="Sepal_Width" placeholder="Sepal Width">
+                </div>
+                <div class="form-group row">
+                  <label for="Petal_Length" class="col-md-5">PETAL LENGTH</label>
+                  <input name="pet_len" required="" type="text" class="col-md-7 form-control" id="Petal_Length" placeholder="Petal Length">
+                </div>
+                <div class="form-group row">
+                  <label for="Petal_Width" class="col-md-5">PETAL WIDTH</label>
+                  <input name="pet_wid" required="" type="text" class="col-md-7 form-control" id="Petal_Width" placeholder="Petal Width">
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+              </form>
+
+              {% if not sub %}
+                <div class="card ans-card">
+                  <div class="card-body">
+                    <div class="h6 ans">{{species}}</div>
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+      
+
+
+
+
+
+
+
+      <div class="card plt-main-card">
+        <div class="card-body">
+          <div class="plt-main-head">ANALYSIS</div>
+          {% for i in range(5) %}
+          <div class="row">
+            {% for j in range(2) %}
+            <div class="col-md-6">
+              <div class="card plt-card">
+                <div class="plt-head">{{plt_head[i][j]}}</div>
+                <img src="{{plt[i][j]}}" class="card-img-top plt-img" alt="...">
+                <div class="card-body plt-text">
+                  <p class="card-text plt-ctnt">{{plt_ctnt[i][j]}}</p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{{url_for('static', filename = 'js/jquery.slim.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/popper.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+
+  </body>
+</html>
